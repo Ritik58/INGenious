@@ -45,16 +45,20 @@ public class XTable extends JTable {
     private boolean inLayout;
     
     private SearchRenderer searchRenderer;
+
+    private SearchRendererDark searchRendererDark;
     
     private EditHeader editHeader;
     
     public XTable() {
         init();
+        initDark();
     }
     
     public XTable(TableModel tm) {
         super(tm);
         init();
+        initDark();
     }
     
     private void init() {
@@ -90,6 +94,45 @@ public class XTable extends JTable {
             @Override
             public void focusLost(FocusEvent fe) {
                 searchRenderer.focused = false;
+                repaint();
+            }
+        });
+        TableCellDrag.install(this);
+    }
+
+    public void initDark() {
+        try {
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("resources/ui/resources/fonts/ingme_regular.ttf"));//.deriveFont(12f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(customFont);
+        } catch (IOException | FontFormatException e) {
+
+            //  e.printStackTrace();
+        }
+        setFont(new Font("ING Me", Font.BOLD, 11));
+        searchRendererDark = new SearchRendererDark();
+        setFillsViewportHeight(true);
+        setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        getTableHeader().setFont(new Font("ING Me", Font.BOLD, 11));
+        getTableHeader().setBackground(Color.decode("#f0edf6"));
+        getTableHeader().setForeground(Color.decode("#d98f07"));
+        getTableHeader().setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.decode("#d98f07")));
+        getTableHeader().setReorderingAllowed(false);
+        setCellSelectionEnabled(true);
+        setColumnSelectionAllowed(true);
+        setGridColor(new Color(246, 227, 221));
+        addKeyListeners();
+        putClientProperty("terminateEditOnFocusLost", true);
+        addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent fe) {
+                searchRendererDark.focused = true;
+                repaint();
+            }
+            
+            @Override
+            public void focusLost(FocusEvent fe) {
+                searchRendererDark.focused = false;
                 repaint();
             }
         });
@@ -248,7 +291,72 @@ public class XTable extends JTable {
             editHeader.disableEdit();
         }
     }
-    
+
+    public void searchForDark(String text) {
+        /**
+         * *************Header Search **************
+         */
+        if (text.startsWith("@")) {
+            for (int i = 0; i < getColumnCount(); i++) {
+                if (text.length() > 1) {
+                    String searchText = text.split("@")[1];
+                    if ((getColumnName(i).toUpperCase()).contains(searchText.toUpperCase())) {
+                        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+                        setColumnSelectionAllowed(true);
+                        headerRenderer.setForeground(Color.decode("#FF6200"));
+                        headerRenderer.setBackground(Color.decode("#A6A5A4"));
+                        getTableHeader().getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+                        
+                    } else {
+                        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+                        headerRenderer.setBackground(Color.decode("#A6A5A4"));
+                        getTableHeader().setForeground(Color.decode("#FF6200"));
+                        getTableHeader().getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+                        
+                    }
+                    
+                } else {
+                    DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+                    headerRenderer.setBackground(Color.decode("#A6A5A4"));
+                    getTableHeader().setForeground(Color.decode("#FF6200"));
+                    getTableHeader().getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+                    
+                }
+            }
+        }
+        /**
+         * *****************************************
+         */
+        searchRendererDark.searchRowMap.clear();
+        Boolean isRegex = false;
+        if (text != null && !text.isEmpty()) {
+            if (text.startsWith("$")) {
+                if (text.length() < 2) {
+                    return;
+                }
+                isRegex = true;
+                text = text.substring(1);
+                if (!isRegexValid(text)) {
+                    return;
+                }
+            }
+            for (int row = 0; row < getRowCount(); row++) {
+                for (int column = 0; column < getColumnCount(); column++) {
+                    String value = Objects.toString(getValueAt(row, column), "");
+                    if (isRegex ? value.matches(text) : value.toLowerCase().contains(text.toLowerCase())) {
+                        //if (value.contains(text)){
+                        if (!searchRendererDark.searchRowMap.containsKey(row)) {
+                            searchRendererDark.searchRowMap.put(row, new ArrayList<Integer>());
+                        }
+                        searchRendererDark.searchRowMap.get(row).add(column);
+                    }
+                }
+            }
+        }
+        repaint();
+    }
+
+
     public void searchFor(String text) {
         /**
          * *************Header Search **************
@@ -313,7 +421,7 @@ public class XTable extends JTable {
         }
         repaint();
     }
-    
+
     private Boolean isRegexValid(String regex) {
         try {
             Pattern.compile(regex);
@@ -414,6 +522,65 @@ public class XTable extends JTable {
     
 }
 
+class SearchRendererDark extends DefaultTableCellRenderer {
+
+    private static final Color BG_SELECT_COLOR = Color.decode("#A6A5A4");
+    private static final Color BG_SEARCH_COLOR = Color.decode("#C8FACF");
+    private static final Color DEF_SELECTION_COLOR = Color.decode("#A6A5A4");
+    private static final Color NOFOCUS_SELECTION_COLOR = Color.decode("#FF6200");
+    
+    public Map<Integer, List<Integer>> searchRowMap = new LinkedHashMap<>();
+    
+    TableCellRenderer defCellRendererDark;
+    
+    Boolean focused = true;
+    
+    public SearchRendererDark setDefRenderer(TableCellRenderer defCellRendererDark) {
+        this.defCellRendererDark = defCellRendererDark;
+        return this;
+    }
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        JComponent comp = (JComponent) defCellRendererDark.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        Boolean rowSelected = false;
+        for (int srow : table.getSelectedRows()) {
+            if (srow == row) {
+                rowSelected = true;
+                break;
+            }
+        }
+        
+        setSelectionColor(rowSelected, isSelected, comp, table.getBackground());
+        setSearchColor(comp, row, column, isSelected);
+        return comp;
+    }
+    
+    private void setSearchColor(JComponent comp, int row, int column, Boolean cellSelected) {
+        if (!cellSelected) {
+            if (searchRowMap.get(row) != null && searchRowMap.get(row).indexOf(column) != -1) {
+                comp.setBackground(BG_SEARCH_COLOR);
+            }
+        }
+    }
+    
+    private void setSelectionColor(Boolean rowSelected, Boolean cellSelected,
+            JComponent comp, Color defalutRowBgColor) {
+        if (rowSelected) {
+            comp.setBackground(BG_SELECT_COLOR);
+        } else {
+            comp.setBackground(defalutRowBgColor);
+        }
+        if (cellSelected) {
+            if (focused) {
+                comp.setBackground(DEF_SELECTION_COLOR);
+            } else {
+                comp.setBackground(NOFOCUS_SELECTION_COLOR);
+                comp.setForeground(Color.decode("#FF6200"));
+            }
+        }
+    }
+    
+}
 class SearchRenderer extends DefaultTableCellRenderer {
 
     private static final Color BG_SELECT_COLOR = Color.decode("#ffcfb2");

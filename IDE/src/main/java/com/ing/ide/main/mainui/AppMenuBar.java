@@ -10,6 +10,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import com.ing.ide.main.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class AppMenuBar extends JMenuBar {
         add(changeFont(createToolsMenu()));
         add(changeFont(createWindowMenu()));
         add(changeFont(createHelpMenu()));
+        // add(changeFont(createViewMenu()));
     }
 
     private void initShortcut() {
@@ -304,9 +306,28 @@ public class AppMenuBar extends JMenuBar {
                 withMnemonics(
                         withShortCut(
                                 Utils.createMenuItem("AdjustUI", sActionListener)), 'A'));
+        
+        JMenu optionsMenu = new JMenu("Change Theme");
+        optionsMenu.add(Utils.createMenuItem("Light", sActionListener));
+        optionsMenu.add(Utils.createMenuItem("Dark", sActionListener));
+        window.add(optionsMenu);
+
+
 
         return window;
     }
+
+//     private JMenu createViewMenu() {
+//         JMenu view = new JMenu("View");
+//         view.setMnemonic('V');
+ 
+//         JMenu optionsMenu = new JMenu("Theme");
+//         optionsMenu.add(Utils.createMenuItem("Light", sActionListener));
+//         optionsMenu.add(Utils.createMenuItem("Dark", sActionListener));
+//         view.add(optionsMenu);
+ 
+//         return view;
+//     }
 
     private JMenuItem withEmptyIcon(JMenuItem menuItem) {
         menuItem.setIcon(Canvas.EmptyIcon);

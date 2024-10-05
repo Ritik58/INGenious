@@ -36,7 +36,18 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import org.apache.commons.lang3.time.StopWatch;
 
-public class Main {
+public class Main extends javax.swing.JFrame{
+
+        AppMainFrame sMainFrame;
+    /**
+     * Creates new form TMSettings
+     *
+     * @param sMainFrame
+     */
+    public Main(AppMainFrame sMainFrame) {
+            this.sMainFrame = sMainFrame;
+    }
+
 
     private static final StopWatch STOP_WATCH = new StopWatch();
 
@@ -123,7 +134,7 @@ public class Main {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private static void tweakNimbusUI() {
+    public static void tweakNimbusUI() {
         
         
         UIManager.put("tableColor", Color.decode("#F5FAFD"));
@@ -262,46 +273,47 @@ public class Main {
             }
         });
     }
+  
+    public static void tweakNimbusDarkUI() {
     
-    private static void tweakNimbusDarkUI() {
-        
         
         UIManager.put("tableColor", Color.decode("#F5FAFD"));
         UIManager.put("subToolBar", Color.decode("#E5F1FA"));
-        UIManager.put("toolBar", Color.decode("#FFFFFF"));
-        UIManager.put("execPanel", Color.decode("#FFFEFC"));
-        UIManager.put("execToolBar", Color.decode("#F9E6AE"));
-        UIManager.put("BDDEditor", Color.decode("#e0cf9c"));
-        //UIManager.put("nimbusBase", Color.decode("#E5E5E5"));//#Fae4c6
-        UIManager.put("nimbusBase", Color.decode("#333335")); // ---> Base Color
-        UIManager.put("searchBox", Color.decode("#FFFFFF"));
-        UIManager.put("nimbusFocus", new Color(0, 0, 0, 0));
-        UIManager.put("shadow", new Color(0, 0, 0, (float) 0.16));
-        UIManager.put("exec", Color.decode("#CEA93A"));
+        UIManager.put("toolBar", Color.decode("#FFA500"));
+        UIManager.put("execPanel", Color.decode("#4C4E52"));
+        UIManager.put("execToolBar", Color.decode("#4C4E52"));
+        UIManager.put("BDDEditor", Color.decode("#4C4E52"));
+        //UIManager.put("nimbusBase", Color.decode("#E5E5E5"));//#Fae4c6#2f2b69
+        UIManager.put("nimbusBase", Color.decode("#A6A5A4"));
+        UIManager.put("searchBox", Color.decode("#4C4E52"));
+        UIManager.put("nimbusFocus",  Color.decode("#FF6200"));
+        UIManager.put("shadow",  Color.decode("#FF6200"));
+        UIManager.put("exec", Color.decode("#FFA500"));
 //         background of tables and properties
-        UIManager.put("nimbusLightBackground", Color.decode("#FAFCFE"));//#939bb7
+        UIManager.put("nimbusLightBackground", Color.decode("#A6A5A4"));//#939bb7
        //UIManager.put("nimbusLightBackground", Color.decode("#Fae4c6"));
         //UIManager.put("nimbusSelectedText", Color.white);
        // UIManager.put("nimbusSelectedText", Color.decode("#FF6200"));
       //  UIManager.put("nimbusSelectedText", Color.decode("#93C47D"));#4073ff
-        UIManager.put("nimbusSelectedText", Color.decode("#0000ff"));
-        UIManager.put("nimbusSelectionBackground", Color.decode("#FF6200"));//ING Orange
+        UIManager.put("nimbusSelectedText", Color.decode("#FF6200"));
+       // UIManager.put("nimbusSelectionBackground", Color.decode("#FF6200"));//ING Orange
+        UIManager.put("nimbusSelectionBackground", Color.decode("#A6A5A4"));
        // UIManager.put("text", Color.decode("#2D2D30"));//583A74
-        UIManager.put("text", Color.decode("#583A74")); // Top Menu Font Color
+        UIManager.put("text", Color.decode("#FF6200")); // Top Menu Font Color
    
-        UIManager.put("gridColor", Color.decode("#FAFCFE"));//////
-        UIManager.put("designTableHeader", Color.decode("#E5F1FA"));
-        UIManager.put("execTableHeader", Color.decode("#F8E6B2"));
+        UIManager.put("gridColor", Color.decode("#FF6200"));//////
+        UIManager.put("designTableHeader", Color.decode("#FF6200"));
+        UIManager.put("execTableHeader", Color.decode("#FF6200"));
 //        for whole background + tree panels
 //        UIManager.put("control", Color.decode("#E0E8EF"));
-        UIManager.put("control", Color.decode("#333335"));//--> Dark Theme
-        UIManager.put("execColor", Color.decode("#F1ECDE"));
-        UIManager.put("designColor", Color.decode("#E0E8EF"));
-        UIManager.put("execTableColor", Color.decode("#FEFDFA"));
+        UIManager.put("control", Color.decode("#4C4E52"));
+        UIManager.put("execColor", Color.decode("#4C4E52"));
+        UIManager.put("designColor", Color.decode("#4C4E52"));
+        UIManager.put("execTableColor", Color.decode("#4C4E52"));
 //      UIManager.getLookAndFeelDefaults().put("Tree:TreeCell.contentMargins", new Insets(0,40,0,10));
 
-        UIManager.getLookAndFeelDefaults().put("nimbusInfoBlue", Color.decode("#F7FAFC"));
-        UIManager.getLookAndFeelDefaults().put("nimbusBlueGrey", Color.decode("#E5F1FA"));
+        UIManager.getLookAndFeelDefaults().put("nimbusInfoBlue", Color.decode("#4C4E52"));
+        UIManager.getLookAndFeelDefaults().put("nimbusBlueGrey", Color.decode("#FF6200"));
 
         UIManager.getLookAndFeelDefaults().put("nimbusBorder", UIManager.getColor("control"));
         
@@ -312,70 +324,70 @@ public class Main {
             //register the font
             ge.registerFont(customFont);
         } catch (IOException | FontFormatException e) {
-          //  e.printStackTrace();
+            //e.printStackTrace();
         }
-        
+            
  //     UIManager.getLookAndFeelDefaults().put("Menu.font", new Font("Courier", Font.BOLD, 12));
         UIManager.put("TableMenu.font", new Font("ING Me", Font.PLAIN, 11));
         UIManager.put("Table.font", new Font("ING Me", Font.BOLD, 12));
         UIManager.getLookAndFeelDefaults().put("Menu.font", new Font("ING Me", Font.BOLD, 12));
         
-        UIManager.getLookAndFeelDefaults().put("ScrollPane[Enabled].borderPainter", new FillPainter1(new Color(0, 0, 0, 0)));
+        UIManager.getLookAndFeelDefaults().put("ScrollPane[Enabled].borderPainter", new FillPainter1(new Color(0,0,0,0)));
 
-        UIManager.getLookAndFeelDefaults().put("MenuBar[Enabled].backgroundPainter", new FillPainter1(new Color(0, 0, 0, 0)));
-        UIManager.getLookAndFeelDefaults().put("Menu[Enabled+Selected].backgroundPainter", new FillPainter1(Color.decode("#FF6200")));
-//      UIManager.getLookAndFeelDefaults().put("MenuBar.background", Color.GREEN);
-        UIManager.getLookAndFeelDefaults().put("MenuBar:Menu[Selected].backgroundPainter", new FillPainter1(Color.decode("#FF6200")));
+        UIManager.getLookAndFeelDefaults().put("MenuBar[Enabled].backgroundPainter", new FillPainter1(new Color(0,0,0,0)));
+        UIManager.getLookAndFeelDefaults().put("Menu[Enabled+Selected].backgroundPainter", new FillPainter1(Color.decode("#000000")));
+        UIManager.getLookAndFeelDefaults().put("MenuBar.background", Color.decode("#4C4E52"));
+        UIManager.getLookAndFeelDefaults().put("MenuBar:Menu[Selected].backgroundPainter", new FillPainter1(Color.decode("#000000")));
         UIManager.getLookAndFeelDefaults().put("ToolBar:ToggleButton[Selected].backgroundPainter", new FillPainter1(new Color(0, 0, 0, 0)));
         UIManager.getLookAndFeelDefaults().put("ToolBar:ToggleButton[MouseOver].backgroundPainter", new FillPainter1(new Color(0, 0, 0, 0)));
         UIManager.getLookAndFeelDefaults().put("ToolBar:Button[Pressed].backgroundPainter", new FillPainter1(new Color(0, 0, 0, 0)));
         UIManager.getLookAndFeelDefaults().put("ToolBar:ToggleButton.contentMargins", new Insets(8, 5, 8, 5));
 
-        UIManager.getLookAndFeelDefaults().put("Table.alternateRowColor", UIManager.getColor("execTableColor"));
-        UIManager.getLookAndFeelDefaults().put("TableHeader:\"TableHeader.renderer\"[Enabled].backgroundPainter", new FillPainter1(new Color(0, 0, 0, 0)));
-        UIManager.getLookAndFeelDefaults().put("TableHeader:\"TableHeader.renderer\"[MouseOver].backgroundPainter", new FillPainter1(new Color(0, 0, 0, (float) 0.05)));
-//      UIManager.getLookAndFeelDefaults().put("CheckBoxMenuItem[MouseOver].textForeground", Color.decode("#333335"));
-//      UIManager.getLookAndFeelDefaults().put("CheckBoxMenuItem[MouseOver+Selected].textForeground",Color.decode("#333335"));
+        UIManager.getLookAndFeelDefaults().put("Table.alternateRowColor", UIManager.getColor("control"));
+        UIManager.getLookAndFeelDefaults().put("TableHeader:\"TableHeader.renderer\"[Enabled].backgroundPainter", new FillPainter1(Color.decode("#A6A5A4")));
+        UIManager.getLookAndFeelDefaults().put("TableHeader:\"TableHeader.renderer\"[MouseOver].backgroundPainter", new FillPainter1(Color.decode("#A6A5A4")));
+    //  UIManager.getLookAndFeelDefaults().put("CheckBoxMenuItem[MouseOver].textForeground", Color.decode("#FF6200"));
+    //  UIManager.getLookAndFeelDefaults().put("CheckBoxMenuItem[MouseOver+Selected].textForeground",Color.decode("#FF6200"));
         UIManager.getLookAndFeelDefaults().put("CheckBoxMenuItem[MouseOver].backgroundPainter", new FillPainter1(Color.decode("#FF6200")));//ING Orange
         UIManager.getLookAndFeelDefaults().put("CheckBoxMenuItem[MouseOver+Selected].backgroundPainter", new FillPainter1(Color.decode("#FF6200")));
-        UIManager.getLookAndFeelDefaults().put("MenuItem[Enabled].textForeground", Color.decode("#333335"));
-        UIManager.getLookAndFeelDefaults().put("MenuItem[Disabled].textForeground", Color.GRAY);
-        UIManager.getLookAndFeelDefaults().put("MenuItem[MouseOver].backgroundPainter", new FillPainter1(Color.decode("#FF6200")));
-        UIManager.getLookAndFeelDefaults().put("Menu[Enabled].textForeground", Color.decode("#333335"));
+        UIManager.getLookAndFeelDefaults().put("MenuItem[Enabled].textForeground", Color.decode("#FF6200"));
+        UIManager.getLookAndFeelDefaults().put("MenuItem[Disabled].textForeground", Color.decode("#FF6200"));
+        UIManager.getLookAndFeelDefaults().put("MenuItem[MouseOver].backgroundPainter", new FillPainter1(Color.decode("#333335")));
+        UIManager.getLookAndFeelDefaults().put("Menu[Enabled].textForeground", Color.decode("#FF6200"));
 //      UIManager.getLookAndFeelDefaults().put("Tree.font", new java.awt.Font("Segoe UI", Font.PLAIN, 14));
         UIManager.getLookAndFeelDefaults().put("Table.showGrid", true);
 
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTabArea[Enabled+MouseOver].backgroundPainter", new FillPainter1(Color.decode("#FFFFFF")));
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTabArea[Enabled+Pressed].backgroundPainter", new FillPainter1(Color.decode("#FFFFFF")));
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTabArea[Enabled].backgroundPainter", new FillPainter1(Color.decode("#FFFFFF")));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTabArea[Enabled+MouseOver].backgroundPainter", new FillPainter1(Color.decode("#A6A5A4")));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTabArea[Enabled+Pressed].backgroundPainter", new FillPainter1(Color.decode("#A6A5A4")));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTabArea[Enabled].backgroundPainter", new FillPainter1(Color.decode("#A6A5A4")));
         //UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Enabled].backgroundPainter", new FillPainter1(Color.decode("#D4E9F7"))); 
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Enabled].backgroundPainter", new FillPainter1(Color.decode("#F7dcd4")));//Added
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Selected].backgroundPainter", new FillPainter1(Color.decode("#FF6200")));
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[MouseOver+Selected].backgroundPainter", new FillPainter1(Color.decode("#FF6200")));
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Focused+Selected].backgroundPainter", new FillPainter1(Color.decode("#FF6200")));
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Focused+MouseOver+Selected].backgroundPainter", new FillPainter1(Color.decode("#FF6200")));
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Pressed+Selected].backgroundPainter", new FillPainter1(Color.decode("#FF6200")));
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Enabled+MouseOver].backgroundPainter", new FillPainter1(Color.decode("#FF6200")));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Enabled].backgroundPainter", new FillPainter1(Color.decode("#A6A5A4")));//Added
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Selected].backgroundPainter", new FillPainter1(Color.decode("#995008")));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[MouseOver+Selected].backgroundPainter", new FillPainter1(Color.decode("#995008")));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Focused+Selected].backgroundPainter", new FillPainter1(Color.decode("#995008")));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Focused+MouseOver+Selected].backgroundPainter", new FillPainter1(Color.decode("#995008")));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Pressed+Selected].backgroundPainter", new FillPainter1(Color.decode("#995008")));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Enabled+MouseOver].backgroundPainter", new FillPainter1(Color.decode("#995008")));
         UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTabArea.contentMargins", new Insets(10, 0, 0, 0));
 //      UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab.contentMargins", new Insets(10, 0, 10, 0));
 
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Selected].textForeground", Color.decode("#FFFFFF"));
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[MouseOver+Selected].textForeground", Color.decode("#FFFFFF"));
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Focused+Selected].textForeground", Color.decode("#FFFFFF"));
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Focused+MouseOver+Selected].textForeground", Color.decode("#FFFFFF"));
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Pressed+Selected].textForeground", Color.decode("#FFFFFF"));
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Enabled+MouseOver].textForeground", Color.decode("#FFFFFF"));//#FF6200
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Selected].textForeground", Color.decode("#FF6200"));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[MouseOver+Selected].textForeground", Color.decode("#FF6200"));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Focused+Selected].textForeground", Color.decode("#FF6200"));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Focused+MouseOver+Selected].textForeground", Color.decode("#FF6200"));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Pressed+Selected].textForeground", Color.decode("#FF6200"));
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab[Enabled+MouseOver].textForeground", Color.decode("#FF6200"));//#FF6200
 
-        UIManager.getLookAndFeelDefaults().put("ToolTip[Enabled].backgroundPainter", new FillPainter1(Color.decode("#F4F6F8")));
+        UIManager.getLookAndFeelDefaults().put("ToolTip[Enabled].backgroundPainter", new FillPainter1(Color.decode("#A6A5A4")));
 
         UIManager.getLookAndFeelDefaults().put("ToolBar:Button[MouseOver].backgroundPainter", new FillPainter1(new Color(0, 0, 0, (float) 0.0)));
         UIManager.getLookAndFeelDefaults().put("ToolBar:Button[Focused+MouseOver].backgroundPainter", new FillPainter1(new Color(0, 0, 0, (float) 0.0)));
         UIManager.getLookAndFeelDefaults().put("ToolBar:Button[Pressed].backgroundPainter", new FillPainter1(new Color(0, 0, 0, 0)));
         UIManager.getLookAndFeelDefaults().put("SplitPane:SplitPaneDivider[Enabled].backgroundPainter", new FillPainter1(new Color(0, 0, 0, 0)));
 
-        UIManager.getLookAndFeelDefaults().put("TextField.foreground", Color.decode("#333335"));
-        UIManager.getLookAndFeelDefaults().put("TextField.background", Color.decode("#FFFFFF"));
-//        UIManager.getLookAndFeelDefaults().put("FormattedTextField.inactiveBackground", Color.decode("#007acc"));
+        UIManager.getLookAndFeelDefaults().put("TextField.foreground", Color.decode("#FF6200"));
+        UIManager.getLookAndFeelDefaults().put("TextField.background", Color.decode("#A6A5A4"));
+    //    UIManager.getLookAndFeelDefaults().put("FormattedTextField.inactiveBackground", Color.decode("#A6A5A4"));
         
         
         /**

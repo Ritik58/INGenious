@@ -17,6 +17,8 @@ import com.ing.ide.main.ui.NewProject;
 import com.ing.ide.main.ui.Options;
 import com.ing.ide.main.utils.CMProjectCreator;
 import com.ing.ide.main.utils.Utils;
+import com.ing.ide.main.*;
+import com.ing.ide.main.utils.table.*;
 import com.ing.ide.util.logging.UILogger;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.lang.String.*;
 
 public class AppActionListener implements ActionListener {
 
@@ -36,6 +39,10 @@ public class AppActionListener implements ActionListener {
     private final DriverSettings driverSettings;
 
     private final TMSettings tmSettings;
+
+    private final Main sMain;
+
+    private final XTable sXTable;
 
     private final Options options;
 
@@ -58,6 +65,8 @@ public class AppActionListener implements ActionListener {
         driverSettings = new DriverSettings(sMainFrame);
         tmSettings = new TMSettings(sMainFrame);
         options = new Options();
+        sMain = new Main(sMainFrame);
+        sXTable = new XTable();
        // scheduler = new SchedulerUI();
         bddParser = new BddParser(sMainFrame);
         jsonParser = new JsonParser(sMainFrame);
@@ -180,6 +189,14 @@ public class AppActionListener implements ActionListener {
                 break;
             case "AdjustUI":
                 sMainFrame.adjustUI();
+                break;
+            case "Dark":
+                sMain.tweakNimbusDarkUI();
+                // sXTable.searchForDark();
+                sXTable.initDark();
+                break;
+            case "Light":
+                sMain.tweakNimbusUI();
                 break;
             case "Create CM Project":
                 CMProjectCreator.createCMProject();
